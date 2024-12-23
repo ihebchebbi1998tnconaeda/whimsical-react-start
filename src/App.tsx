@@ -12,6 +12,7 @@ import { Skeleton } from "./components/ui/skeleton";
 // Lazy load pages
 const Index = React.lazy(() => import("./pages/Index"));
 const CategoryPage = React.lazy(() => import("./pages/CategoryPage"));
+const GiftUniversePage = React.lazy(() => import("./pages/GiftUniversePage"));
 const CartPage = React.lazy(() => import('./pages/CartPage'));
 const PaymentSuccessPage = React.lazy(() => import('./pages/PaymentSuccessPage'));
 const PaymentFailurePage = React.lazy(() => import('./pages/PaymentFailurePage'));
@@ -69,6 +70,14 @@ const App = () => (
                   element={
                     <Suspense fallback={<PageLoader />}>
                       <CategoryPage />
+                    </Suspense>
+                  } 
+                />
+                <Route 
+                  path="/univers-cadeaux/*" 
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <GiftUniversePage />
                     </Suspense>
                   } 
                 />
