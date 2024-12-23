@@ -55,13 +55,13 @@ const Products = () => {
             </CarouselContent>
             <CarouselPrevious
               aria-label="Produit précédent"
-              className="absolute -left-12 top-1/2 transform -translate-y-1/2 bg-black hover:bg-black/90 border-none h-10 w-10 rounded-full z-10"
+              className="absolute -left-4 md:-left-6 top-1/2 transform -translate-y-1/2 bg-black hover:bg-black/90 border-none h-8 w-8 md:h-10 md:w-10 rounded-full z-10"
             >
               <i className="bi bi-chevron-left text-white"></i>
             </CarouselPrevious>
             <CarouselNext
               aria-label="Produit suivant"
-              className="absolute -right-12 top-1/2 transform -translate-y-1/2 bg-black hover:bg-black/90 border-none h-10 w-10 rounded-full z-10"
+              className="absolute -right-4 md:-right-6 top-1/2 transform -translate-y-1/2 bg-black hover:bg-black/90 border-none h-8 w-8 md:h-10 md:w-10 rounded-full z-10"
             >
               <i className="bi bi-chevron-right text-white"></i>
             </CarouselNext>
