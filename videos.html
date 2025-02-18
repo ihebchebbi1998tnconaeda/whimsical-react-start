@@ -1,0 +1,1003 @@
+<html lang="ar"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.2/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Alexandria-Regular';
+            src: url('Alexandria-Regular.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Alexandria-Regular', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: auto;
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            min-height: 200px;
+        }
+
+        .video-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .video-card img {
+            border-radius: 8px 8px 0 0;
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-weight: bold;
+            margin: 0;
+            font-size: 1.2rem;
+            text-align: right;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            text-align: right;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .modal-body video {
+            width: 100%;
+            border-radius: 0 0 8px 8px;
+            outline: none;
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .navbar-custom {
+            background-color: #7792bd;
+        }
+
+        .navbar-brand img {
+            height: 60px;
+        }
+
+        .nav-link {
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            color: lightgray;
+        }
+
+        .logout-icon {
+            color: white;
+            font-family: Helvetica, sans-serif;
+            font-size: 1.3rem;
+        }
+
+        @media (min-width: 768px) {
+            .banner-image {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .banner-text {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .footer {
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer .logo {
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="https://draminesaid.com/">
+                <img src="https://draminesaid.com/wp-content/uploads/2024/11/Dramine-White-logo-199x112.png" alt="Dr Amine Said Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="saisonsnew.html">الحصص</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link logout-icon" href="https://draminesaid.com/"><i class="bi bi-box-arrow-right"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="banner-image" style="background-image: url(&quot;bg.png&quot;);"></div>
+
+    <div class="container my-5">
+        <div id="loading" class="loader" style="display: none;"></div>
+        <div class="row g-4 justify-content-center" id="video-gallery">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/Intro.mov">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/Intro.png" class="card-img-top" alt="ﺑﺪﺍﻳﺔ ﺟﺪﻳﺪﺓ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">ﺑﺪﺍﻳﺔ ﺟﺪﻳﺪﺓ</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/1.mov">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/1.png" class="card-img-top" alt="تعريف التشافي من منظور أعمق ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">تعريف التشافي من منظور أعمق </h5>
+                                            <p class="card-text">التشافي هو قبول و تصالح مع العقد الروحي بكل تحدياته في البعد البشري المادي</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/2.mov">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/2.png" class="card-img-top" alt="الإنتقال من دور الضحية إلى دور الإنسان المسؤول ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">الإنتقال من دور الضحية إلى دور الإنسان المسؤول </h5>
+                                            <p class="card-text">ليس هنالك نقطة وصول في التشافي بل هو عملية تناغم مع التطور المستمر لذواتنا مع كل ما يتطلبه هذا التطور من حس مسؤولية و الخروج من دور الضحية</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/3.mov">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/3.png" class="card-img-top" alt="أهمية الوعي بعدل الله في إختياره نوعية تحدياتنا في الحياة ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">أهمية الوعي بعدل الله في إختياره نوعية تحدياتنا في الحياة </h5>
+                                            <p class="card-text">لا تقارن تحدياتك و تجاربك مع أي إنسان و كن متأكد أن الله لن يكلفك ما لا وسع أو قدرة لك به</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/4.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/4.png" class="card-img-top" alt="كيفية تكون الجروح ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">كيفية تكون الجروح </h5>
+                                            <p class="card-text">جروحنا و صدماتنا و معتقداتنا التي تحدنا هي علميا شبكات خلوية في الذهن تبدأ بالتكون منذ الطفولة من خلال تفاعلنا مع العالم الخارجي و من المهم أن نعي بها و نشتغل عليها</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/5.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/5.png" class="card-img-top" alt="فهم مختلف أنواع أجسادنا و كيف نجد تناغمنا بينها ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">فهم مختلف أنواع أجسادنا و كيف نجد تناغمنا بينها </h5>
+                                            <p class="card-text">في هذا المقطع تفسير لمختلف أجسادنا و أهمية التشافي في الجسد السفلي كي نتصل بالجسد العلوي و نجد تناغمنا في رحلة الحياة</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/6.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/6.png" class="card-img-top" alt="التشافي تطبيقيا و عمليا ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">التشافي تطبيقيا و عمليا </h5>
+                                            <p class="card-text">المفاهيم و العادات التي سنطبقها في حياتنا كي نجذر التشافي</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap1livevideo.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/7live.png" class="card-img-top" alt="مباشر الحصة الأولى   ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">مباشر الحصة الأولى   </h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap2_1.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap2_1.png" class="card-img-top" alt="مراحل تطور الوعي و إسقاط على سلم مقياس الوعي لهاوكينز">
+                                        <div class="card-body">
+                                            <h5 class="card-title">مراحل تطور الوعي و إسقاط على سلم مقياس الوعي لهاوكينز</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap2_2.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap2_2.png" class="card-img-top" alt="أهمية تنظيف المحيط و الوعي بقوة الكلمة">
+                                        <div class="card-body">
+                                            <h5 class="card-title">أهمية تنظيف المحيط و الوعي بقوة الكلمة</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap2_3.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap2_3.png" class="card-img-top" alt="أهمية القبول و التعاطف مع غرفنا المظلمة">
+                                        <div class="card-body">
+                                            <h5 class="card-title">أهمية القبول و التعاطف مع غرفنا المظلمة</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap2_4.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap2_4.png" class="card-img-top" alt="كيف تتشافى من إنتهاء علاقة عاطفية">
+                                        <div class="card-body">
+                                            <h5 class="card-title">كيف تتشافى من إنتهاء علاقة عاطفية</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap2livevid.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap2live.png" class="card-img-top" alt="مباشر الحصة الثانية">
+                                        <div class="card-body">
+                                            <h5 class="card-title">مباشر الحصة الثانية</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap31.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap31.png" class="card-img-top" alt="تعريف الطاقة ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">تعريف الطاقة </h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap3reallive.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap3live.png" class="card-img-top" alt="مباشر الحصة الثالثة">
+                                        <div class="card-body">
+                                            <h5 class="card-title">مباشر الحصة الثالثة</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap3realqa.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/Q_Achap3.png" class="card-img-top" alt="Q&amp;A">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Q&amp;A</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/liverealchap42.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap4live.png" class="card-img-top" alt="مباشر الحصة الرابعة ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">مباشر الحصة الرابعة </h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap41.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap41.png" class="card-img-top" alt="تلخيص للأفكار الرئيسية حول الشاكرات">
+                                        <div class="card-body">
+                                            <h5 class="card-title">تلخيص للأفكار الرئيسية حول الشاكرات</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap4realliveqa.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap4liveqa.png" class="card-img-top" alt="Q&amp;A">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Q&amp;A</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap51.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap51.png" class="card-img-top" alt="الإتصال بالذات العليا نقطة البداية">
+                                        <div class="card-body">
+                                            <h5 class="card-title">الإتصال بالذات العليا نقطة البداية</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap52.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap52.png" class="card-img-top" alt="أهمية تفعيل العطاء في عملية التطور">
+                                        <div class="card-body">
+                                            <h5 class="card-title">أهمية تفعيل العطاء في عملية التطور</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap53.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap53.png" class="card-img-top" alt="أعرف نفسك جيدا">
+                                        <div class="card-body">
+                                            <h5 class="card-title">أعرف نفسك جيدا</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap54.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap54.png" class="card-img-top" alt="كيف تتصل بنفسك أكثر تطبيقيا">
+                                        <div class="card-body">
+                                            <h5 class="card-title">كيف تتصل بنفسك أكثر تطبيقيا</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap55.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap55.png" class="card-img-top" alt="أهمية البيئة و الفكر و النفسية السليمة و المتوازنة لمزيد الإتصال بالذات">
+                                        <div class="card-body">
+                                            <h5 class="card-title">أهمية البيئة و الفكر و النفسية السليمة و المتوازنة لمزيد الإتصال بالذات</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap56live.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap5live.png" class="card-img-top" alt="مباشر الحصة الخامسة  ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">مباشر الحصة الخامسة  </h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap61.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap61.png" class="card-img-top" alt="أهمية الإتصال بالطفل الداخلي">
+                                        <div class="card-body">
+                                            <h5 class="card-title">أهمية الإتصال بالطفل الداخلي</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap621.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap621.png" class="card-img-top" alt="عملية التفرد">
+                                        <div class="card-body">
+                                            <h5 class="card-title">عملية التفرد</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap622.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap622.png" class="card-img-top" alt="2 عملية التفرد">
+                                        <div class="card-body">
+                                            <h5 class="card-title">2 عملية التفرد</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap6live.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap6live.png" class="card-img-top" alt="مباشر الحصة السادسة  ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">مباشر الحصة السادسة  </h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap71.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap71.png" class="card-img-top" alt="⁨المقدمة لتفعيل مفاتيح التجلي⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨المقدمة لتفعيل مفاتيح التجلي⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap72.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap72.png" class="card-img-top" alt="⁨توقف عن العيش_ في الماضي⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨توقف عن العيش_ في الماضي⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap73.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap73.png" class="card-img-top" alt="⁨توقف عن العيش في المستقبل⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨توقف عن العيش في المستقبل⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap74.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap74.png" class="card-img-top" alt="⁨عش هنا و الآن و فعل مفاتيح التجلي⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨عش هنا و الآن و فعل مفاتيح التجلي⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap75.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap75.png" class="card-img-top" alt="⁨لا تنسي تنظيف محيطك و عالمك المادي و الإجتماعي⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨لا تنسي تنظيف محيطك و عالمك المادي و الإجتماعي⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/chap7live.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/chap7live.png" class="card-img-top" alt="مباشر الحصة السابعة ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">مباشر الحصة السابعة </h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2video1.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2thumb1.png" class="card-img-top" alt=" جد توازنك مع نفسك">
+                                        <div class="card-body">
+                                            <h5 class="card-title"> جد توازنك مع نفسك</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2video2.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2thumb2.png" class="card-img-top" alt="جد توازنك مع الآخر">
+                                        <div class="card-body">
+                                            <h5 class="card-title">جد توازنك مع الآخر</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2video3.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2thumb3.png" class="card-img-top" alt="جد توازنك مع الكون الجزء الأول">
+                                        <div class="card-body">
+                                            <h5 class="card-title">جد توازنك مع الكون الجزء الأول</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2video4.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2thumb4.png" class="card-img-top" alt="جد توازنك مع الكون الجزء الثاني">
+                                        <div class="card-body">
+                                            <h5 class="card-title">جد توازنك مع الكون الجزء الثاني</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap11.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap11.png" class="card-img-top" alt="الجزء الأول من المباشر">
+                                        <div class="card-body">
+                                            <h5 class="card-title">الجزء الأول من المباشر</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap12.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap12.png" class="card-img-top" alt="الجزء الثاني من المباشر">
+                                        <div class="card-body">
+                                            <h5 class="card-title">الجزء الثاني من المباشر</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap13.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap13.png" class="card-img-top" alt="الجزء الثالث من المباشر">
+                                        <div class="card-body">
+                                            <h5 class="card-title">الجزء الثالث من المباشر</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap14.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap14.png" class="card-img-top" alt="الجزء الرابع من المباشر">
+                                        <div class="card-body">
+                                            <h5 class="card-title">الجزء الرابع من المباشر</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap15.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap15.png" class="card-img-top" alt="الجزء الخامس من المباشر">
+                                        <div class="card-body">
+                                            <h5 class="card-title">الجزء الخامس من المباشر</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap1cap1.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap1cap1.png" class="card-img-top" alt="المقدمة: حان وقت الاستيقاظ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">المقدمة: حان وقت الاستيقاظ</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap1cap2.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap1cap2.png" class="card-img-top" alt="⁨العبور نحو البعد الخامس من الوعي⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨العبور نحو البعد الخامس من الوعي⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap1cap3.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap1cap3.png" class="card-img-top" alt="⁨كيفية إعادة برمجة العقل الاواعي⁩⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨كيفية إعادة برمجة العقل الاواعي⁩⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap1cap4.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap1cap4.png" class="card-img-top" alt="⁨كيف نتغلب على التسويف و نحول معلوماتنا إلى معرفة و يقين و تطبيق⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨كيف نتغلب على التسويف و نحول معلوماتنا إلى معرفة و يقين و تطبيق⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap1cap5.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap1cap5.png" class="card-img-top" alt="⁨مراحل تطور الوعي⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨مراحل تطور الوعي⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap1cap6.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap1cap6.png" class="card-img-top" alt="7 خطوات لتجد توازنك وتناغمك مع الحياة">
+                                        <div class="card-body">
+                                            <h5 class="card-title">7 خطوات لتجد توازنك وتناغمك مع الحياة</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap1cap7.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap1cap7.png" class="card-img-top" alt="⁨كيف نفعل طاقة الخلق لدينا و نحقق خلافة الله في الأرض⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨كيف نفعل طاقة الخلق لدينا و نحقق خلافة الله في الأرض⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap2live1.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap2live1.png" class="card-img-top" alt="⁨الجزء الأول من المباشر⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨الجزء الأول من المباشر⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap2live2.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap2live2.png" class="card-img-top" alt="⁨الجزء الثاني من المباشر⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨الجزء الثاني من المباشر⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap2cap1.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap2cap1.png" class="card-img-top" alt="⁨جد توازنك مع محيطك المقدمة⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨جد توازنك مع محيطك المقدمة⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap2cap2.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap2cap2.png" class="card-img-top" alt="⁨العقود الروحية و الهدف منها⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨العقود الروحية و الهدف منها⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap2cap3.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap2cap3.png" class="card-img-top" alt="⁨تصالح مع محيطك و بيئتك⁩ ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨تصالح مع محيطك و بيئتك⁩ </h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap2cap4.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap2cap4.png" class="card-img-top" alt="⁨القوانين الروحانية الأربعة للتزامن⁩ ">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨القوانين الروحانية الأربعة للتزامن⁩ </h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap2cap5.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap2cap5.png" class="card-img-top" alt="⁨ملخص لمختلف أنواع العلاقات">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨ملخص لمختلف أنواع العلاقات</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="http://vps-0c1f981a.vps.ovh.ca:3001/uploads/chap3live.mp4?v=2">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap3live1.png" class="card-img-top" alt="⁨الجزء الأول من المباشر⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨الجزء الأول من المباشر⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="http://vps-0c1f981a.vps.ovh.ca:3001/uploads/chap3live.mp4?v=2">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap3live2.png" class="card-img-top" alt="الجزء الثاني من المباشر⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">الجزء الثاني من المباشر⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="http://vps-0c1f981a.vps.ovh.ca:3001/uploads/chap3live.mp4?v=2">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap3live3.png" class="card-img-top" alt="⁩ الجزء الثالث من المباشر">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁩ الجزء الثالث من المباشر</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap3cap1.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap3cap1.png" class="card-img-top" alt="⁨مقدمة الجزء الثالث⁩⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨مقدمة الجزء الثالث⁩⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap3cap2.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap3cap2.png" class="card-img-top" alt="⁨و على نواياكم ترزقون تعميق لهذا الوعي⁩⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨و على نواياكم ترزقون تعميق لهذا الوعي⁩⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap3cap3.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap3cap3.png" class="card-img-top" alt="⁨في التخلي تجلي⁩">
+                                        <div class="card-body">
+                                            <h5 class="card-title">⁨في التخلي تجلي⁩</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://plateform.draminesaid.com/app/videos/saison2chap3cap4.mp4">
+                                        <img src="https://plateform.draminesaid.com/app/thumbnail/saison2chap3cap4.png" class="card-img-top" alt="القوانين الكونية">
+                                        <div class="card-body">
+                                            <h5 class="card-title">القوانين الكونية</h5>
+                                            <p class="card-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    </div>
+
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    <video controls="" controlslist="nodownload" autoplay="">
+                        <source src="" type="video/mp4">
+                        Votre navigateur ne prend pas en charge la balise vidéo.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer py-3">
+        <div class="container text-center d-flex justify-content-between align-items-center">
+            <div class="center-footer">
+                <span>© 2024 Dr Amine Said</span>
+            </div>
+            <div class="right-footer">
+                <span>Développé Par <strong>Hola!Studio</strong></span>
+            </div>
+            <div class="left-footer">
+                <img src="logo.png" alt="Logo" class="logo">
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check URL parameter and set background image
+        const urlParams = new URLSearchParams(window.location.search);
+        const catVideo = urlParams.get('cat_video');
+        const bannerElement = document.querySelector('.banner-image');
+        
+let backgroundImage;
+
+switch (catVideo) {
+case '1':
+backgroundImage = "bgsaison2.png?v2";
+break;
+case 'chap8':
+backgroundImage = "saisonsimages/saison2chap1live.png?v2";
+break;
+case 'chap8cap':
+backgroundImage = "saisonsimages/saison2chap1captitles.png?v2";
+break;
+case 'chap9':
+backgroundImage = "saisonsimages/saison2chap2live.png?v2";
+break;
+case 'chap9cap':
+backgroundImage = "saisonsimages/saison2chap2captitles.png?v2";
+break;
+case 'chap10':
+backgroundImage = "saisonsimages/saison2chap3live.png?v2";
+break;
+case 'chap10cap':
+backgroundImage = "saisonsimages/saison2chap3captitles.png?v2";
+break;
+default:
+backgroundImage = "bg.png";
+}
+
+bannerElement.style.backgroundImage = `url('${backgroundImage}')`;
+    
+    // Treat 'chap8cap' as 'chap8
+        (function($, undefined) {
+            function getUrlParameter(name) {
+                name = name.replace(/[$]/, '\$').replace(/[$]/, '\$');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            const chapter = getUrlParameter('cat_video');
+            
+            $.ajax({
+                url: `https://plateform.draminesaid.com/app/get_videos.php?key=38457&cat_video=${chapter}`,
+                method: 'GET',
+                beforeSend: function() {
+                    $('#loading').show();
+                    $('#video-gallery').empty();
+                },
+                success: function(data) {
+                    const $videoGallery = $('#video-gallery');
+                    if (data['success'] && data['data']['length'] > 0) {
+                        data['data'].forEach(video => {
+                            const thumbnailUrl = 'https://plateform.draminesaid.com/app/' + video['url_thumbnail'];
+                            let videoUrl = 'https://plateform.draminesaid.com/app/' + video['url_video'];
+
+                            if (videoUrl.includes('live7')) {
+                                videoUrl = 'http://vps-0c1f981a.vps.ovh.ca:3001/uploads/7live.mp4';
+                            } else if (videoUrl.includes('chap2video')) {
+                                videoUrl = 'https://vps-0c1f981a.vps.ovh.ca:3001/uploads/Live2.mp4';
+                            } else if (videoUrl.includes('chap3live')) {
+                                videoUrl = 'http://vps-0c1f981a.vps.ovh.ca:3001/uploads/chap3live.mp4?v=2';
+                            } else if (videoUrl.includes('qachap3')) {
+                                videoUrl = 'http://vps-0c1f981a.vps.ovh.ca:3001/uploads/qachap3.mp4?v=2';
+                            } else if (videoUrl.includes('chap5liveqa')) {
+                                videoUrl = 'http://vps-0c1f981a.vps.ovh.ca:3001/uploads/chap5liveqa.mp4?v=2';
+                            } else if (videoUrl.includes('chap5videolive')) {
+                                videoUrl = 'http://vps-0c1f981a.vps.ovh.ca:3001/uploads/chap5live.mp4?v=2';
+                            }
+
+                            const html = `
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card video-card" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="${videoUrl}">
+                                        <img src="${thumbnailUrl}" class="card-img-top" alt="${video['name_video']}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${video['name_video']}</h5>
+                                            <p class="card-text">${video['descri_video']}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            $videoGallery.append(html);
+                        });
+                    } else {
+                        $videoGallery.append('<p class="text-center">No videos found.</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    const chapter = getUrlParameter('cat_video');
+                    window.location.replace(`videofallback.html?cat_video=${encodeURIComponent(chapter)}`);
+                },
+                complete: function() {
+                    $('#loading').hide();
+                }
+            });
+
+            $('#videoModal').on('show.bs.modal', function(event) {
+                const button = $(event.relatedTarget);
+                const videoUrl = button.data('video');
+                $(this).find('video source').attr('src', videoUrl);
+                $(this).find('video')[0].load();
+            });
+
+            $('#videoModal').on('hide.bs.modal', function(event) {
+                $(this).find('video')[0].pause();
+            });
+        })(jQuery);
+
+        if (!localStorage.getItem("user")) {
+            window.location.href = "https://draminesaid.com/videos/";
+        }
+    </script>
+
+
+</body></html>
